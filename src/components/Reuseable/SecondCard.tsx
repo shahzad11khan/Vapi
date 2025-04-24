@@ -5,12 +5,12 @@ import DoughnutChart from './DoughnutChart';
 interface CardProps {
   title: string;
   count: string | null;
-  percentageChange: number | string;
-  image: string;
+  // percentageChange: number | string;
+  // image: string;
   idx: number;
 }
 
-const SecondCard: React.FC<CardProps> = ({ title, count, percentageChange, image, idx }) => {
+const SecondCard: React.FC<CardProps> = ({ title, count, idx }) => {
   return (
     <div className="p-3 text-white flex flex-col justify-between rounded-xl">
         <div>

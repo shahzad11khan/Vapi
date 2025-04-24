@@ -8,22 +8,22 @@ const HeroSection: React.FC = () => {
       title: 'Total Call Minutes',
       range:'Response Rate',
       value: '0.00',
-      percentageChange: 56,
-      image: '/sidebarimages/totaluser.png', // replace with actual image path
+      // percentageChange: 56,
+      // image: '/sidebarimages/totaluser.png', 
     },
     {
       title: 'Number of Calls',
       value: '1',
       range:'Response Rate',
-      percentageChange: -4.2,
-      image: '/sidebarimages/totalstore.png',
+      // percentageChange: -4.2,
+      // image: '/sidebarimages/totalstore.png',
     },
     {
       title: 'Reason Call Ended',
       range:'',
       value: '',
-      percentageChange: 9.8,
-      image: '/sidebarimages/totalrev.png',
+      // percentageChange: 9.8,
+      // image: '/sidebarimages/totalrev.png',
     },
   ];
 
@@ -37,8 +37,8 @@ const HeroSection: React.FC = () => {
             title={card.title}
             count={card.value}
             rate={card.range}
-            percentageChange={card.percentageChange}
-            image={card.image}
+            // percentageChange={card.percentageChange}
+            // image={card.image}
             idx={idx}
           />
         </div>

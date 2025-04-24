@@ -5,12 +5,12 @@ interface CardProps {
   title: string;
   rate: string | null;
   count: number | string;
-  percentageChange: number;
-  image: string;
+  // percentageChange: number;
+  // image: string;
   idx: number;
 }
 
-const Card: React.FC<CardProps> = ({ title, count, rate, idx, percentageChange, image }) => {
+const Card: React.FC<CardProps> = ({ title, count, rate, idx }) => {
   return (
     <div className="p-3 text-white flex flex-col justify-between ">
           <h2 className="text-[12px] font-semibold items-start">{title}</h2>

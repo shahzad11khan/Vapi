@@ -5,8 +5,8 @@ const SecondHeroSection: React.FC = () => {
     {
       title: 'Number of Concurrent Calls',
       value: '31.6k',
-      percentageChange: 56,
-      image: '/sidebarimages/totaluser.png', // replace with actual image path
+      // percentageChange: 56,
+      // image: '/sidebarimages/totaluser.png', // replace with actual image path
     },
     {
       title: 'Success Evaluation',
@@ -17,16 +17,10 @@ const SecondHeroSection: React.FC = () => {
     {
       title: 'Unsuccessful calls',
       value: '',
-      percentageChange: 9.8,
-      image: '/sidebarimages/totalrev.png',
+      // percentageChange: 9.8,
+      // image: '/sidebarimages/totalrev.png',
     },
-    // {
-    //   title: 'Average call Duration by Assistant',
-    //   value: ".",
-    //   image: '/sidebarimages/totalrev.png',
-    //   percentageChange:"" ,
 
-    // },
   ];
 
   return (
@@ -37,8 +31,8 @@ const SecondHeroSection: React.FC = () => {
           <SecondCard
             title={card.title}
             count={card.value} 
-            percentageChange={card.percentageChange}
-            image={card.image}
+            // percentageChange={card.percentageChange}
+            // image={card.image}
             idx={idx}
           />
         </div>
