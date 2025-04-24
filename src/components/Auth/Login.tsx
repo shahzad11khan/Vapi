@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { BaseUrl } from "../../utils/BaseUrl";
 import { Signup_Middle_Point } from "../../utils/MiddlePoint";
-import { Signup_End_Point } from "../../utils/EndPoint";
+import { Login_End_Point } from "../../utils/EndPoint";
 import { makeApiRequest } from '../../utils/axios';
 
 
@@ -23,7 +23,7 @@ const Login: React.FC = () => {
   };
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const URL = BaseUrl + Signup_Middle_Point + Signup_End_Point;
+    const URL = BaseUrl + Signup_Middle_Point + Login_End_Point;
     const method = "POST";
     const { email, password } = formData;
 
@@ -39,10 +39,18 @@ const Login: React.FC = () => {
           method,
           data: formData
         })
-console.log(response);
+        console.log(response);
+         if (response.warning) {
+              toast.warn(response.warning);
+            } else if (response.message) {
+              toast.success(response.message); 
+              navigation('/dashboard');
+            } else if (response.err) {
+              toast.error(response.err);    
+            }
 
-        toast.success('Login successful!');
-        navigation('/dashboard'); 
+        // toast.success('Login successful!');
+        // navigation('/dashboard'); 
     } catch (error) {
       toast.error('Login failed. Please try again.');
       console.error(error);
