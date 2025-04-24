@@ -1,0 +1,1 @@
+export const Signup_Middle_Point ="/users"

@@ -1,0 +1,1 @@
+export const Signup_End_Point = "/register";
