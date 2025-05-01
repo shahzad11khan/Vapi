@@ -11,9 +11,12 @@ export const makeApiRequest = async ({
     url,
     method = 'GET',
     data = null,
-    headers = {},
+    headers = {
+        Authorization:`Bearer ${localStorage.getItem('token')}`
+    },
 }: ApiRequestParams) => {
     try {
+        console.log(localStorage.getItem('token'))
         const config: AxiosRequestConfig = {
             method,
             url,
@@ -25,10 +28,10 @@ export const makeApiRequest = async ({
         };
 
         const response = await axios(config);
-        console.log("Axios Response",response)
+        // console.log("Axios Response",response)
         return response.data;
     } catch (error: any) {
-        console.error('Error making API request:', error.message);
-        return null;
+        // console.error('Error making API request:', error.message);
+        return error.response.data;
     }
 };

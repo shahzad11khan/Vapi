@@ -39,13 +39,13 @@ const Login: React.FC = () => {
           method,
           data: formData
         })
-        console.log(response);
-         if (response.warning) {
+         if (response?.warning) {
               toast.warn(response.warning);
-            } else if (response.message) {
+            } else if (response?.message) {
+              localStorage.setItem('token' , response.token)
               toast.success(response.message); 
               navigation('/dashboard');
-            } else if (response.err) {
+            } else if (response?.err) {
               toast.error(response.err);    
             }
 

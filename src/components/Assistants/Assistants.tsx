@@ -17,10 +17,22 @@ import AssistantForm12 from './AssistandForm12';
 import AssistantForm13 from './AssistantForm13';
 import AssistantForm14 from './AssistantForm14';
 import TopBar from '../Reuseable/TopBar';
+import { BaseUrl } from '../../utils/BaseUrl';
+import { Assistant_Middle_Point} from '../../utils/MiddlePoint';
+import { makeApiRequest } from '../../utils/axios';
+import { toast } from 'react-toastify';
+
 
 
 const Assistants: React.FC = () => {
     const [selectedCategory, setSelectedCategory] = useState('Model');
+    const [ boxView , setBoxView] = useState(false);
+    const [AssistantFormData , setAssistantForm] = useState({
+        AssistantName:"",
+        FirstPrompt:"",
+        SystemPrompt:""
+    });
+    const uri = BaseUrl + Assistant_Middle_Point;
 
     const categories = ['Model', 'Deepgram', 'GPT-4.0', 'Tools', 'Analysis', 'Advanced'];
     const items = [
@@ -49,8 +61,84 @@ const Assistants: React.FC = () => {
         console.log('Publish clicked');
       };
 
+      const handleChange =(e:React.FormEvent) => {
+        e.preventDefault();
+        const {name , value} = e.target as HTMLInputElement;
+        setAssistantForm((preForm)=>{
+            return{...preForm , [name]: value}
+        })
+      }
+
+      const handleSubmit = async (e:React.FormEvent) => {
+        e.preventDefault();
+        const method = "POST";
+        const response = await makeApiRequest({
+          url: uri,
+          method,
+          data: AssistantFormData
+        });        
+        console.log(response);
+        if (response?.warning) {
+            toast.warn(response.warning);
+        } else if (response?.message) {
+            toast.success(response.message);
+            setBoxView(false)
+            setAssistantForm({
+                AssistantName:"",
+                FirstPrompt:"",
+                SystemPrompt:""
+            }) 
+        } else if (response?.err) {
+            toast.error(response.err);    
+        }
+      }
     return (
-        <div className="w-full px-6 py-4 ">
+        <div className="w-full px-6 py-4 relative ">
+            {boxView && 
+            <div className='h-[100vh] backdrop-blur-[5px] bg-white/1 p-10 top-0 left-[21%] fixed w-[80%] z-50'>
+            <form onSubmit={handleSubmit} className='border-[2px] border-[#1c1c1c79] bg-black rounded-2xl w-[400px] fixed p-5 flex flex-col gap-3 top-[50%] left-[40%] -translate-[50%] ' >
+                <div className='flex flex-col'>
+                    <label htmlFor="assistantName" className="text-[12px] mb-1">Assistant Name</label>
+                    <input 
+                    type="text" 
+                    className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white" 
+                    name="AssistantName" id="" value={AssistantFormData.AssistantName} 
+                    onChange={handleChange}
+                    required
+                    />
+                </div>
+                <div className='flex flex-col'>
+                    <label htmlFor="firstPrompt" className="text-[12px] mb-1">First Prompt</label>
+                    <input 
+                    type="text" 
+                    className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white"
+                    name="FirstPrompt" id="" value={AssistantFormData.FirstPrompt}
+                    onChange={handleChange}
+                    required 
+                    />
+                </div>
+                <div className='flex flex-col'>
+                    <label htmlFor="systemPrompt" className="text-[12px] mb-1">System Prompt</label>
+                    <textarea 
+                    className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white h-[200px] resize-none overflow-y-auto" 
+                    name="SystemPrompt" 
+                    id="" value={AssistantFormData.SystemPrompt}
+                    onChange={handleChange}
+                    required 
+                    />
+                </div>
+                <div className='flex justify-between'>
+                <button type='submit'  className="cursor-pointer bg-[#55761C] text-white px-5 py-2 rounded-lg hover:bg-[#446013] transition mt-2">
+                    Save Assistant
+                </button>
+                <button onClick={()=> setBoxView(false)} className="cursor-pointer bg-[#55761C] text-white px-5 py-2 rounded-lg hover:bg-[#446013] transition mt-2">
+                    Cancel
+                </button> 
+                </div>
+            </form>
+            </div>
+             } 
+
              <TopBar
         title="Assistants"
         buttons={[
@@ -219,7 +307,7 @@ const Assistants: React.FC = () => {
                 <div className=" h-40 bg-gray-200 p-4 rounded-md shadow flex flex-col">
                     <p className="text-gray-800 font-semibold">This is the 20% width div</p>
                 </div>
-                    <button className="bg-[#55761C] text-white px-5 py-2 rounded-lg hover:bg-[#446013] transition mt-2">
+                    <button onClick={()=> setBoxView(true)} className="cursor-pointer bg-[#55761C] text-white px-5 py-2 rounded-lg hover:bg-[#446013] transition mt-2">
                         Create Assistant
                     </button>  
                     </div>            

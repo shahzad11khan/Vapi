@@ -27,7 +27,7 @@ const SecondHeroSection: React.FC = () => {
     
     <div className="mt-6 flex flex-wrap gap-5">
       {Secondcards.map((card, idx) => (
-        <div className={`w-full ${idx === 0 ? 'lg:w-[359px]' : idx === 1 ? 'lg:w-[445px]' :  idx === 2 ? 'lg:w-[234px]' : idx===3 ? 'lg:w-[507px] ': 'lg:w-[425px]'} bg-[#1C1C1C] rounded-2xl`} key={idx}>
+        <div className={`w-full lg:h-[338px] ${idx === 0 ? 'lg:w-[345px]' : idx === 1 ? 'lg:w-[430px]' :  idx === 2 ? 'lg:w-[224px]' : idx===3 ? 'lg:w-[507px] ': 'lg:w-[425px]'} bg-[#1C1C1C] rounded-2xl`} key={idx}>
           <SecondCard
             title={card.title}
             count={card.value} 

@@ -10,7 +10,7 @@ const Layout: React.FC = () => {
       {/* <Header username="JohnDoe"
         profileImage="https://via.placeholder.com/150" /> */}
 
-      <div className='flex gap-5'>
+      <div className='flex gap-2'>
         <LeftSidebar />
 
         <Outlet />

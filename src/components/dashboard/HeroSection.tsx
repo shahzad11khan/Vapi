@@ -30,9 +30,9 @@ const HeroSection: React.FC = () => {
   return (
     <>
     <FilterBar />
-    <div className="flex flex-wrap gap-6 mt-6 w-full">
+    <div className="flex flex-wrap gap-5 mt-6 w-full">
       {cards.map((card, idx) => (
-        <div className={`w-full ${idx === 1 ? 'lg:w-[234px]' : idx===2 ?'lg:w-[507px]' :'lg:w-[288px]'} ${idx === 1 ? 'bg-[#55761C]':'bg-[#1C1C1C]'} rounded-2xl`} key={idx}> 
+        <div className={`w-full lg:h-[221px] ${idx === 1 ? 'lg:w-[230px]' : idx===2 ?'lg:w-[500px]' :'lg:w-[270px]'} ${idx === 1 ? 'bg-[#55761C]':'bg-[#1C1C1C]'} rounded-2xl`} key={idx}> 
           <Card
             title={card.title}
             count={card.value}

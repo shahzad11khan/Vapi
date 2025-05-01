@@ -88,7 +88,7 @@ const location = useLocation();
 
 
   return (
-    <div className="w-[240px] h-auto bg-[#1C1C1C] p-3 gap-4 flex flex-col shadow-2xl m-5 text-center">
+    <div className="w-[240px] h-[145vh] bg-[#1C1C1C] p-3 gap-4 flex flex-col shadow-2xl m-5 text-center rounded-2xl">
       {/* Dropdown Button at the Top */}
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2 cursor-pointer" onClick={toggleDropdown}>
