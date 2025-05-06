@@ -1,7 +1,54 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
-const AccordionForm: React.FC = () => {
+interface Assistant {
+    AssistantName: string;
+    FirstPrompt : string;
+    SystemPrompt : string;
+    _id : string;
+    createdBy : string;
+  }
+  
+  interface AccordionFormProps {
+    sellectedAssistant: Assistant | null;
+    setSellectedAssistant : React.Dispatch<React.SetStateAction<Assistant | null>>
+  }
+
+const AccordionForm: React.FC<AccordionFormProps> = ({sellectedAssistant , setSellectedAssistant}) => {
+    console.log(sellectedAssistant)
     const [isOpen, setIsOpen] = useState(true);
+    const [modeForm , setModelForm] = useState({
+        FirstPrompt: "",
+        SystemPrompt: "",
+        Files: "",
+        Provider: "",
+    })
+
+    useEffect(()=>{
+        setModelForm({
+            FirstPrompt: sellectedAssistant?.FirstPrompt || "",
+            SystemPrompt: sellectedAssistant?.SystemPrompt || "",
+            Files: "",
+            Provider: "",
+        })
+        setIsOpen(true)
+    },[sellectedAssistant?._id])
+
+    const HandleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const {value , name} = event.target;
+        setModelForm((preValue)=>{
+            return {
+                ...preValue,
+                [name] : value
+            }
+        }) 
+        setSellectedAssistant((preValue)=>{
+            if (!preValue) return preValue;
+            return {
+                ...preValue,
+                [name] : value
+            }
+        })
+    }
 
     return (
         <div className="text-white font-semibold  border-[#1C1C1C] rounded-xl shadow mt-4">
@@ -27,10 +74,13 @@ const AccordionForm: React.FC = () => {
 
                         <div className='flex flex-col gap-y-4'>
                             <div className="flex flex-col">
-                                <label className="text-[12px] mb-1">First Promt</label>
+                                <label className="text-[12px] mb-1">First Propmt</label>
                                 <input
                                     type="text"
                                     placeholder="Enter model name"
+                                    name='FirstPrompt'
+                                    value={modeForm.FirstPrompt}
+                                    onChange={HandleChange}
                                     className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white"
                                 />
                             </div>
@@ -38,6 +88,9 @@ const AccordionForm: React.FC = () => {
                                 <label className="text-[12px] mb-1">System Prompt</label>
                                 <textarea
                                     placeholder="e.g., You are a helpful assistant..."
+                                    name='SystemPrompt'
+                                    value={modeForm.SystemPrompt}
+                                    onChange={HandleChange}
                                     className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white h-[259px] resize-none overflow-y-auto"
                                     style={{ textAlign: 'left' }}
                                 />
@@ -51,17 +104,21 @@ const AccordionForm: React.FC = () => {
                                 <input
                                     type="text"
                                     placeholder="e.g., GPT-4"
+                                    name='Provider'
+                                    value={modeForm.Provider}
+                                    onChange={HandleChange}
                                     className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white"
                                 />
                             </div>
-
-
 
                             <div className="flex flex-col">
                                 <label className="text-[12px] mb-1">Files</label>
                                 <input
                                     type="number"
                                     placeholder="e.g., 1"
+                                    name='Files'
+                                    value={modeForm.Files}
+                                    onChange={HandleChange}
                                     className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white"
                                 />
                             </div>

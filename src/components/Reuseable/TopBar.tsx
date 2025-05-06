@@ -13,7 +13,7 @@ const TopBar: React.FC<TopBarProps> = ({ title, buttons }) => {
   return (
     <div className="flex flex-col md:flex-row  md:justify-between gap-4 ">
       <p className="text-sm font-semibold text-white">{title}</p>
-      <div className="flex lg:w-[326px] gap-2">
+      <div className="flex lg:w-[426px] gap-2">
         {buttons.map((btn, index) => (
           <button
             key={index}

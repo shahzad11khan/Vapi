@@ -10,7 +10,7 @@ interface ApiRequestParams {
 export const makeApiRequest = async ({
     url,
     method = 'GET',
-    data = null,
+    data = {},
     headers = {
         Authorization:`Bearer ${localStorage.getItem('token')}`
     },
