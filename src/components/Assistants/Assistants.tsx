@@ -196,7 +196,7 @@ const Assistants: React.FC = () => {
         const {name , value} = e.target as HTMLInputElement;
         setAssistantForm((preForm)=>{
             return{...preForm , [name]: value}
-        })
+        });
       }
 
 

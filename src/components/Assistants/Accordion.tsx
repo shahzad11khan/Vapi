@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { BaseUrl } from '../../utils/BaseUrl';
+import { File_Middle_point } from '../../utils/MiddlePoint';
+import { makeApiRequest } from '../../utils/axios';
 
 interface Assistant {
     AssistantName: string;
@@ -12,16 +15,52 @@ interface Assistant {
     sellectedAssistant: Assistant | null;
     setSellectedAssistant : React.Dispatch<React.SetStateAction<Assistant | null>>
   }
+  interface FileItem {
+    pdfFile: {
+      fileName: string;
+      path: string;
+    };
+    createdBy: string;
+  }
 
 const AccordionForm: React.FC<AccordionFormProps> = ({sellectedAssistant , setSellectedAssistant}) => {
-    console.log(sellectedAssistant)
+    // console.log(sellectedAssistant)
     const [isOpen, setIsOpen] = useState(true);
+    const [files, setFiles] = useState<FileItem[]>([]);
     const [modeForm , setModelForm] = useState({
         FirstPrompt: "",
         SystemPrompt: "",
         Files: "",
         Provider: "",
     })
+
+    // const [selectedIndex, setSelectedIndex] = useState(null);
+    // const [newFileName, setNewFileName] = useState("");
+
+    const handleSelectChange = async(e : React.ChangeEvent<HTMLSelectElement>) => {
+    const {value} = e.target;
+    if(value ){
+        const url = BaseUrl + File_Middle_point +"/" + value;
+        const response = await makeApiRequest({url ,method:"POST"});
+        console.log(response);
+        if(response.message){
+            setModelForm((preValue)=>{
+               return {...preValue , SystemPrompt:response.text}
+            });
+            if(sellectedAssistant){
+            setSellectedAssistant({...sellectedAssistant, SystemPrompt:response.text})
+            }
+        }
+    }
+    };
+
+    const fetchData = async() => {
+        const url = BaseUrl + File_Middle_point;
+        const response = await makeApiRequest({url});
+        if(response.message){
+            setFiles(response.files);
+        }
+    }
 
     useEffect(()=>{
         setModelForm({
@@ -30,7 +69,10 @@ const AccordionForm: React.FC<AccordionFormProps> = ({sellectedAssistant , setSe
             Files: "",
             Provider: "",
         })
-        setIsOpen(true)
+        setIsOpen(true);
+        if(sellectedAssistant){
+            fetchData();
+        }
     },[sellectedAssistant?._id])
 
     const HandleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -111,7 +153,7 @@ const AccordionForm: React.FC<AccordionFormProps> = ({sellectedAssistant , setSe
                                 />
                             </div>
 
-                            <div className="flex flex-col">
+                            {/* <div className="flex flex-col">
                                 <label className="text-[12px] mb-1">Files</label>
                                 <input
                                     type="number"
@@ -121,6 +163,16 @@ const AccordionForm: React.FC<AccordionFormProps> = ({sellectedAssistant , setSe
                                     onChange={HandleChange}
                                     className="p-2 rounded bg-[#1C1C1C] border border-gray-700 text-white"
                                 />
+                            </div> */}
+
+                            <div className="flex flex-col ">
+                                <label className="text-[12px] mb-1">Files</label>
+                                    <select className='bg-[#1C1C1C] rounded-md p-2 border border-gray-700' onChange={handleSelectChange}>
+                                    <option value={''}>Select File</option>
+                                    {files.map((file, index) => (
+                                        <option key={index}>{file.pdfFile.fileName}</option>
+                                    ))}
+                                    </select>
                             </div>
                         </div>
 

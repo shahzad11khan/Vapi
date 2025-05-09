@@ -5,6 +5,7 @@ interface ApiRequestParams {
     method?: 'GET' | 'POST' | 'PUT' | 'DELETE';
     data?: any;
     headers?: Record<string, string>;
+    contentType? : string;
 }
 
 export const makeApiRequest = async ({
@@ -14,6 +15,7 @@ export const makeApiRequest = async ({
     headers = {
         Authorization:`Bearer ${localStorage.getItem('token')}`
     },
+    contentType = 'application/json',
 }: ApiRequestParams) => {
     try {
         console.log(localStorage.getItem('token'))
@@ -21,14 +23,14 @@ export const makeApiRequest = async ({
             method,
             url,
             headers: {
-                'Content-Type': 'application/json',  // Default header
+                'Content-Type': contentType,  // Default header
                 ...headers,  // Merge any additional headers passed in
             },
             data,  
         };
 
         const response = await axios(config);
-        // console.log("Axios Response",response)
+        console.log("Axios Response",response)
         return response.data;
     } catch (error: any) {
         // console.error('Error making API request:', error.message);
