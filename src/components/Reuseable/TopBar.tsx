@@ -1,3 +1,5 @@
+import { useLocation } from "react-router-dom";
+
 interface TopBarButton {
   label: string;
   onClick: () => void;
@@ -9,12 +11,19 @@ interface TopBarProps {
   buttons: TopBarButton[];
 }
 
-const TopBar: React.FC<TopBarProps> = ({ title, buttons }) => {
+
+
+  const TopBar: React.FC<TopBarProps> = ({ title, buttons }) => {
+  const location = useLocation();
+  console.log(location.pathname);
+  let filterButton = buttons.filter((button )=> location.pathname === '/Assistant' ? button: button.label != 'Talk to Assistant');
+  console.log(filterButton);
+
   return (
     <div className="flex flex-col md:flex-row  md:justify-between gap-4 ">
       <p className="text-sm font-semibold text-white">{title}</p>
-      <div className="flex lg:w-[426px] gap-2">
-        {buttons.map((btn, index) => (
+      <div className={`flex ${location.pathname === '/Assistant' ? 'lg:w-[426px]' : 'lg:w-[426px] justify-end' } gap-2`}>
+        {filterButton.map((btn, index) => (
           <button
             key={index}
             onClick={btn.onClick}

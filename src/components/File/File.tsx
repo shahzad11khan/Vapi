@@ -97,23 +97,8 @@ const Files = () => {
                         className="absolute left-3 top-2.5 w-5 h-5 opacity-60"
                         />
                     </div>
-                    {/* Right Card */}
-                    <div className="bg-[#1C1C1C] rounded-xl p-8 w-[326px] text-center shadow-md mt-5">
-                        <p className="text-gray-400 mb-6">
-                            Workflows is now available to all Vapi users in Open Beta. Please check out the docs here.
-                        </p>
-                        <button
-                            onClick={handleCreateWorkflow}
-                            className="px-6 py-2 bg-[#55761C] text-white rounded-lg hover:bg-[#6e9a27] transition"
-                        >
-                            Create New Tool
-                        </button>
-                    </div>
-                </div>
-            </div>
 
-            <div className="w-full flex justify-center">
-            <div className="p-4 text-center shadow-md mt-5 w-[326px]">
+                    <div className="p-4 text-center shadow-md mt-5 w-[326px]">
                 <button onClick={handleCreateWorkflow} className='w-full'>
                     <div className="flex flex-col items-center border border-dotted border-gray-600 rounded-lg p-4">
                         <img
@@ -135,7 +120,21 @@ const Files = () => {
                     <input type="file" name='pdfFile' onChange={ handleChange } className="hidden" />
                 </label>
             </div>
-</div>
+
+                    {/* Right Card */}
+                    {/* <div className="bg-[#1C1C1C] rounded-xl p-8 w-[326px] text-center shadow-md mt-5">
+                        <p className="text-gray-400 mb-6">
+                            Workflows is now available to all Vapi users in Open Beta. Please check out the docs here.
+                        </p>
+                        <button
+                            onClick={handleCreateWorkflow}
+                            className="px-6 py-2 bg-[#55761C] text-white rounded-lg hover:bg-[#6e9a27] transition"
+                        >
+                            Create New Tool
+                        </button>
+                    </div> */}
+                </div>
+            </div>
         </div>
     );
 };
